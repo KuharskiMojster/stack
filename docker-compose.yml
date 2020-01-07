@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 services:
 
   db:
@@ -10,18 +10,22 @@ services:
       - "5432:5432"
 
   recipe-crud:
-    image: "recipe-crud"
+    #image: "recipe-crud"
+    build: ../recipe-crud
     environment:
       -SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/postgres"
       -SPRING_DATASOURE_USERNAME: "postgres"
       -SPRING_DATASOURCE_PASSWORD: "postgres"
+      -KAFKA_ADDRESS: "kafka:9092"
     ports:
       - "8080:8080"
     depends_on:
       - db
+      - kafka
 
   recipe-filter:
-    image: "recipe-filter"
+    #image: "recipe-filter"
+    build: ../filter
     environment:
       -SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/postgres"
       -SPRING_DATASOURE_USERNAME: "postgres"
@@ -32,32 +36,27 @@ services:
       - "9080:9080"
 
   subscriptions:
-    image: "recipe-subscriptions"
+    #image: "subscriptions"
+    build: ../subscriptions
     environment:
       -KAFKA_RATINGS_TOPIC: "ratings"
       -KAFKA_COMMENTS_TOPIC: "comments"
-      -KAFKA_BOOTSTRAPADDRESS: "kafka:9092"
+      -KAFKA_ADDRESS: "kafka:9092"
     depends_on:
       - kafka
     ports:
-      - "8080:7080"
+      - "7080:8080"
 
-  recipe-ratings:
-    image: "recipe-ratings"
+  ratings:
+    #image: "ratings"
+    build: ../ratings
     environment:
       -KAFKA_TOPIC: "subscriptions"
-      -KAFKA_BOOTSTRAPADDRESS: "kafka:9092"
+      -KAFKA_ADDRESS: "kafka:9092"
     depends_on:
       - kafka
     ports:
-      - "8080:6080"
-
-  recipe-intro:
-    image: "recipe-intro"
-    environment:
-      -GITHUB_LINKS: "githublink1, git_link2, git_link3"
-    ports:
-      - "7080:5080"
+      - "6080:8080"
 
   neo:
     # this image is AGPLv3 licensed: https://www.graphfoundation.org/projects/ongdb/
