@@ -1,0 +1,19 @@
+sudo: required
+services:
+- docker
+language: java
+env:
+  global:
+  - REGISTRY_USER=rsosem
+  - DOCKER_IMAGE=kuharskimojster/stack:1.0.0-SNAPSHOT-$TRAVIS_JOB_NUMBER
+  - secure: oSxMk6l4HZhsJW51V8jeLR/prLnN05cwjO36Wid7+tgmfuAqEz1x0cWLKFu7O5s2mPMxcxnyIYISU8w/jAzUbFcK8xnZxqLP5DchtqoD1gn0s87hDy1MNTb72rhJtA6E81QtSt9HWAbxQ20NR0yKSUNsevGaGeUpqkZV8W5KkCE2Z+3c9y5RhvGxQAFgCPjFlttBtjAv3QkpqOEn9flvMh4MesMx4jUv9WOfrjPJksCwWDGIzE2EHA6TnXq78+xed1VoqUVLKLyGDkcCfN3KRLW/d9HitPb/MrVhT6fgkuvwUsnyoBXirFsb8ZEXXqKuV50sUK1ZMTpKoN4kzKnh0sbV+fQoaESNn6QlP4yt3kAW6+4lQaYNuIBbzEVOQbBoXgYqdSOU7Rw5eIwBCwWgrPXKgoDN9kLnzA8Lt7V5kt59iwsZMMo7Oyljs7B+TrRHNcABwMcPgUbYP5fo6z/SHqt9M8w2RYo/4FktgzcziT9SXbFN+e1ifyO/LtjJGfiRgml/feheSzShPZg3AVQ4HfIwzbAExFo0xTWWy/ifUl9BW821r0SepXAJ+I5UwmyN2vASnb2viXZXFRqwoVyuqlucLzOwIn19+6lnLYhAQpabrV0zXokgDWOXjf70QNM3PWHbxdgd8SPcmLn7eY0Mzjn7Dm2d2jcU6kuS24jDSjM=
+script:
+- mvn clean package -U
+- docker build -t "$DOCKER_IMAGE" .
+after_script:
+- docker images
+after_success:
+- echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
+- docker push "$DOCKER_IMAGE"
+before_install:
+- chmod +x mvnw
