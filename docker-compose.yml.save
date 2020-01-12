@@ -17,13 +17,11 @@ services:
       -SPRING_DATASOURE_USERNAME: "postgres"
       -SPRING_DATASOURCE_PASSWORD: "postgres"
       -KAFKA_ADDRESS: "kafka:9092"
-      -SPRING_BOOT_ADMIN_CLIENT_URL: "admin:8080"
     ports:
       - "8080:8080"
     depends_on:
       - db
       - kafka
-      - admin
 
   recipe-filter:
     #image: "recipe-filter"
@@ -32,10 +30,8 @@ services:
       -SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/postgres"
       -SPRING_DATASOURE_USERNAME: "postgres"
       -SPRING_DATASOURCE_PASSWORD: "postgres"
-      -SPRING_BOOT_ADMIN_CLIENT_URL: "admin:8080"
     depends_on:
       - db
-      - admin
     ports:
       - "9080:9080"
 
@@ -46,10 +42,8 @@ services:
       -KAFKA_RATINGS_TOPIC: "ratings"
       -KAFKA_COMMENTS_TOPIC: "comments"
       -KAFKA_ADDRESS: "kafka:9092"
-      -SPRING_BOOT_ADMIN_CLIENT_URL: "admin:8080"
     depends_on:
       - kafka
-      - admin
     ports:
       - "7080:8080"
 
@@ -59,7 +53,6 @@ services:
     environment:
       -KAFKA_TOPIC: "subscriptions"
       -KAFKA_ADDRESS: "kafka:9092"
-      -SPRING_BOOT_ADMIN_CLIENT_URL: "admin:8080"
     depends_on:
       - kafka
     ports:
@@ -72,17 +65,11 @@ services:
       -SPRING_DATA_NEO4J_URI: "bolt://neo:7687"
       -SPRING_DATA_NEO4J_USERNAME: "neo4j"
       -SPRING_DATA_NEO4J_PASSWORD: "pass"
-      -SPRING_BOOT_ADMIN_CLIENT_URL: "admin:8080"
     depends_on:
       - neo
-      - admin
     ports:
       - "5080:9080"
-  
-  admin:
-    build: ../admin-server
-    ports:
-      - "4080:8080"
+   https://github.com/KuharskiMojster/recommendations.git
 
   neo:
     # this image is AGPLv3 licensed: https://www.graphfoundation.org/projects/ongdb/
