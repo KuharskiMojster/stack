@@ -45,6 +45,9 @@ services:
     #image: "subscriptions"
     build: ../subscriptions
     environment:
+      -SPRING_DATA_NEO4J_URI: "bolt://neo:7687"
+      -SPRING_DATA_NEO4J_USERNAME: "neo4j"
+      -SPRING_DATA_NEO4J_PASSWORD: "pass"
       -KAFKA_RATINGS_TOPIC: "ratings"
       -KAFKA_COMMENTS_TOPIC: "comments"
       -KAFKA_ADDRESS: "kafka:9092"
@@ -60,6 +63,9 @@ services:
     #image: "ratings"
     build: ../ratings
     environment:
+      -SPRING_DATA_NEO4J_URI: "bolt://neo:7687"
+      -SPRING_DATA_NEO4J_USERNAME: "neo4j"
+      -SPRING_DATA_NEO4J_PASSWORD: "pass"
       -KAFKA_TOPIC: "subscriptions"
       -KAFKA_ADDRESS: "kafka:9092"
       -LOGGING_FILE_PATH: "logging/application.log"
