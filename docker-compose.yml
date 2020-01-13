@@ -10,8 +10,8 @@ services:
       - "5432:5432"
 
   recipe-crud:
-    #image: "recipe-crud"
-    build: ../recipe-crud
+    image: "kuharskimojster/recepie-crud:1.0.0-SNAPSHOT-13.1"
+    #build: ../recipe-crud
     environment:
       -SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/postgres"
       -SPRING_DATASOURE_USERNAME: "postgres"
@@ -27,8 +27,8 @@ services:
       - admin
 
   recipe-filter:
-    #image: "recipe-filter"
-    build: ../filter
+    image: "kuharskimojster/filter:1.0.0-SNAPSHOT-9.1"
+    #build: ../filter
     environment:
       -SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/postgres"
       -SPRING_DATASOURE_USERNAME: "postgres"
@@ -42,8 +42,8 @@ services:
       - "9080:9080"
 
   subscriptions:
-    #image: "subscriptions"
-    build: ../subscriptions
+    image: "kuharskimojster/subscriptions:1.0.0-SNAPSHOT-2.1"
+    #build: ../subscriptions
     environment:
       -KAFKA_RATINGS_TOPIC: "ratings"
       -KAFKA_COMMENTS_TOPIC: "comments"
@@ -57,8 +57,8 @@ services:
       - "7080:8080"
 
   ratings:
-    #image: "ratings"
-    build: ../ratings
+    image: "kuharskimojster/ratings:1.0.0-SNAPSHOT-3.1"
+    #build: ../ratings
     environment:
       -KAFKA_TOPIC: "subscriptions"
       -KAFKA_ADDRESS: "kafka:9092"
@@ -91,7 +91,8 @@ services:
 
   neo:
     # this image is AGPLv3 licensed: https://www.graphfoundation.org/projects/ongdb/
-    build: neo4j/
+    #build: neo4j/
+    image: "kuharskimojster/neo:1.0.0-SNAPSHOT-1"
     restart: always
     hostname: neo
     volumes:
