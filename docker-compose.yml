@@ -97,21 +97,19 @@ services:
 
   neo:
     # this image is AGPLv3 licensed: https://www.graphfoundation.org/projects/ongdb/
-    #build: neo4j/
-    image: "kuharskimojster/neo:1.0.0-SNAPSHOT-1"
+    build: neo4j/
+    #image: "kuharskimojster/neo:1.0.0-SNAPSHOT-1"
     restart: always
     hostname: neo
-    volumes:
-      - ./neo4j/data:/data
-      - ./neo4j/logs:/logs
-      - ./neo4j/plugins:/var/lib/neo4j/plugins
-      - ./neo4j/conf:/conf
     ports:
       - 7474:7474
       - 7687:7687
     environment:
       - NEO4J_dbms_memory_heap_max__size=2G
       - NEO4J_AUTH=neo4j/pass
+    depends_on:
+      - kafka
+      - zk
 
 
   zk:
