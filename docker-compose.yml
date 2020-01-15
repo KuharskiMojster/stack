@@ -10,7 +10,7 @@ services:
       - "5432:5432"
 
   recipe-crud:
-    image: "kuharskimojster/recepie-crud:1.0.0-SNAPSHOT-13.1"
+    image: "kuharskimojster/recipe-crud:1.2.0."
     #build: ../recipe-crud
     environment:
       -SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/postgres"
@@ -27,7 +27,7 @@ services:
       - admin
 
   recipe-filter:
-    image: "kuharskimojster/filter:1.0.0-SNAPSHOT-9.1"
+    image: "kuharskimojster/filter:1.2.0."
     #build: ../filter
     environment:
       -SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/postgres"
@@ -42,7 +42,7 @@ services:
       - "9080:9080"
 
   subscriptions:
-    image: "kuharskimojster/subscriptions:1.0.0-SNAPSHOT-2.1"
+    image: "kuharskimojster/subscriptions:1.2.0."
     #build: ../subscriptions
     environment:
       -SPRING_DATA_NEO4J_URI: "bolt://neo:7687"
@@ -60,7 +60,7 @@ services:
       - "7080:8080"
 
   ratings:
-    image: "kuharskimojster/ratings:1.0.0-SNAPSHOT-3.1"
+    image: "kuharskimojster/ratings:1.2.0."
     #build: ../ratings
     environment:
       -SPRING_DATA_NEO4J_URI: "bolt://neo:7687"
@@ -76,8 +76,8 @@ services:
       - "6080:8080"
 
   recommendations:
-    #image: "recommendations"
-    build: ../recommendations
+    image: "kuharskimojster/recommendations:1.2.0."
+    #build: ../recommendations
     environment:
       -SPRING_DATA_NEO4J_URI: "bolt://neo:7687"
       -SPRING_DATA_NEO4J_USERNAME: "neo4j"
@@ -92,7 +92,7 @@ services:
   
   admin:
     #build: ../admin-server
-    image: "kuharskimojster/admin-server:1.0.0."
+    image: "kuharskimojster/admin-server:1.2.0."
     ports:
       - "4080:8080"
 
