@@ -91,14 +91,15 @@ services:
       - "5080:9080"
   
   admin:
-    build: ../admin-server
+    #build: ../admin-server
+    image: "kuharskimojster/admin-server:1.0.0."
     ports:
       - "4080:8080"
 
   neo:
     # this image is AGPLv3 licensed: https://www.graphfoundation.org/projects/ongdb/
-    build: neo4j/
-    #image: "kuharskimojster/neo:1.0.0-SNAPSHOT-1"
+    #build: neo4j/
+    image: "kuharskimojster/neo:2.0.0."
     restart: always
     hostname: neo
     ports:
@@ -139,14 +140,3 @@ services:
       KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-
-  ksql:
-  # the base of this image is Apache 2.0 licensed: https://hub.docker.com/r/confluentinc/cp-kafka-connect-base/
-    image: confluentinc/cp-ksql-server
-    restart: always
-    ports:
-      - 8088:8088
-    environment:
-      CONFLUENT_SUPPORT_METRICS_ENABLE: 0
-      KSQL_BOOTSTRAP_SERVERS: "kafka:9092"
-      KSQL_LISTENERS: http://0.0.0.0:8088
